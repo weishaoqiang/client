@@ -10,39 +10,81 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome Fullter!',
       theme: new ThemeData(
-        // brightness: Brightness.light,
-        // primaryColor: Colors.lightBlue[800],
-        // accentColor: Colors.blue,
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primaryColor: Colors.lightBlue[800],
+        accentColor: Colors.blue,
       ),
-      home: new MyHomePage(
-        title: 'Welcome Flutter',
+      // 首页路由
+      home: new MyHomePage( title: 'Welcome Flutter' )
+    );
+  }
+}
+
+// 下面实现一个计数器
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  _MyHomePageState createState() => new _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+  String title = '12';
+  void incrementCounter () {
+    print(title);
+    setState(() {
+      _counter += 10;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('incrementCount'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('请点击右下角的加号按钮对数据进行增加！'),
+            Text(
+              '现在数据的结果为：$_counter',
+              textAlign: TextAlign.center,
+              ),
+            FlatButton(
+              child: Text('open new router'),
+              textColor: Colors.blue,
+              onPressed: () {
+                //导航到新路由   
+                Navigator.push( context,
+                new MaterialPageRoute(builder: (context) {
+                  return new NewRouter();
+                }));
+              },
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add)
       )
     );
   }
 }
 
-// 页面组件
-class MyHomePage extends StatelessWidget {
-  final String title; // 定义常量title
-  MyHomePage({Key key, @required this.title}) : super(key: key);
-  
+class NewRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text('New Router'),
       ),
       body: Center(
-        child: Container(
-          color: Theme.of(context).accentColor,
-          // color: Colors.red,
-          child: new Text(
-            'hello word! hello word! hello word! hello word! hello word! hello word!',
-            textAlign: TextAlign.center,
-            // style: Theme.of(context).textTheme.title,
-          ),
-        ),
+        child: Text('This is new route'),
       ),
     );
   }
